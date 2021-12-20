@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const userRoutes = require('./routes/user');
 
 require('dotenv').config();
 
@@ -14,5 +15,8 @@ mongoose
 
 // Base middleware
 app.use(express.json());
+
+// Routes
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
