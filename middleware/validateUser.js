@@ -10,7 +10,7 @@ const userSchema = yup.object({
   email: yup.string().email().required(),
 });
 
-module.exports = () => async (req, res, next) => {
+module.exports = async (req, res, next) => {
   try {
     await userSchema.validate(req.body);
     return next();
