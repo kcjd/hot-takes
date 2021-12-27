@@ -1,6 +1,6 @@
 const yup = require('yup');
 
-const userSchema = yup.object({
+module.exports = yup.object({
   password: yup
     .string()
     .min(8)
@@ -9,12 +9,3 @@ const userSchema = yup.object({
     .required(),
   email: yup.string().email().required(),
 });
-
-module.exports = async (req, res, next) => {
-  try {
-    await userSchema.validate(req.body);
-    return next();
-  } catch (err) {
-    return res.status(400).json(err);
-  }
-};
