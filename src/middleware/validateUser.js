@@ -1,10 +1,11 @@
+const createError = require('http-errors');
 const userSchema = require('../validations/user.validation');
 
 module.exports = async (req, res, next) => {
   try {
     await userSchema.validate(req.body);
-    return next();
+    next();
   } catch (err) {
-    return res.status(400).json(err);
+    next(createError(400, err));
   }
 };
