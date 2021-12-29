@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/auth.route');
+const saucesRoute = require('./routes/sauces.route');
+const requireAuth = require('./middleware/requireAuth');
 const handleErrors = require('./middleware/handleErrors');
 
 require('dotenv').config();
@@ -18,6 +20,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoute);
+app.use('/api/sauces', requireAuth, saucesRoute);
 
 app.use(handleErrors);
 
