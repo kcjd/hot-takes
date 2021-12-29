@@ -6,11 +6,10 @@ const handleErrors = require('./middleware/handleErrors');
 require('dotenv').config();
 
 const app = express();
-const { DB_USER, DB_PASSWORD, DB_NAME } = process.env;
 
 // Connect to db
 mongoose
-  .connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ah27n.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`)
+  .connect(process.env.DB_URL)
   .then(() => console.log('Connected to db'))
   .catch((err) => console.log('Failed to connect to db', err));
 
