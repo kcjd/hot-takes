@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
+const path = require('path')
 const authRoute = require('./routes/auth.route')
 const saucesRoute = require('./routes/sauces.route')
 const requireAuth = require('./middleware/requireAuth')
@@ -17,10 +19,14 @@ mongoose
 
 // Base middleware
 app.use(express.json())
+app.use(cors())
 
 // Routes
 app.use('/api/auth', authRoute)
 app.use('/api/sauces', requireAuth, saucesRoute)
+
+// Static
+app.use(express.static(path.join(__dirname, '../public')))
 
 app.use(handleErrors)
 
