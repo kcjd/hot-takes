@@ -2,6 +2,29 @@ const fs = require('fs/promises')
 const createError = require('http-errors')
 const Sauce = require('../models/sauce.model')
 
+exports.getSauces = async (req, res, next) => {
+  try {
+    const sauces = await Sauce.find()
+
+    res.status(200).json(sauces)
+  } catch (err) {
+    next(err)
+  }
+}
+
+exports.getSauce = async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const sauce = await Sauce.findById(id)
+    if (!sauce) throw createError(404, 'sauce not found')
+
+    res.status(200).json(sauce)
+  } catch (err) {
+    next(err)
+  }
+}
+
 exports.createSauce = async (req, res, next) => {
   try {
     const sauce = new Sauce({
