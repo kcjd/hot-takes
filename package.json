@@ -10,10 +10,8 @@
   "author": "Kévin Colonjard",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^8.4.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "standard": "^16.0.4"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
