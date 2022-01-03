@@ -1,11 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const helmet = require('helmet')
+const sanitize = require('express-mongo-sanitize')
 const path = require('path')
+const requireAuth = require('./middleware/requireAuth')
+const rateLimiter = require('./middleware/rateLimiter')
+const handleErrors = require('./middleware/handleErrors')
 const authRoute = require('./routes/auth.route')
 const saucesRoute = require('./routes/sauces.route')
-const requireAuth = require('./middleware/requireAuth')
-const handleErrors = require('./middleware/handleErrors')
 
 require('dotenv').config()
 
@@ -21,12 +24,17 @@ mongoose
 app.use(express.json())
 app.use(cors())
 
-// Routes
-app.use('/api/auth', authRoute)
-app.use('/api/sauces', requireAuth, saucesRoute)
+// Security middleware
+app.use(helmet())
+app.use(sanitize())
+app.use(rateLimiter)
 
 // Static
 app.use(express.static(path.join(__dirname, '../public')))
+
+// Routes
+app.use('/api/auth', authRoute)
+app.use('/api/sauces', requireAuth, saucesRoute)
 
 app.use(handleErrors)
 
