@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const helmet = require('helmet')
 const sanitize = require('express-mongo-sanitize')
-const rateLimit = require('express-rate-limit')
 const path = require('path')
+const limiter = require('./middleware/limiter')
 const requireAuth = require('./middleware/requireAuth')
 const handleErrors = require('./middleware/handleErrors')
 const authRoute = require('./routes/auth.route')
@@ -27,7 +27,7 @@ app.use(cors())
 // Security middleware
 app.use(helmet())
 app.use(sanitize())
-app.use(rateLimit({ windowMs: 60 * 60 * 1000, max: 100 }))
+app.use('/api', limiter)
 
 // Static
 app.use(express.static(path.join(__dirname, '../public')))
